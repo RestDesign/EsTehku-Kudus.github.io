@@ -8,6 +8,7 @@
   --primary-gold: #ff6b6b;
   --radius: 14px;
   --shadow: 0 6px 16px rgba(57, 45, 39, 0.08);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * {
@@ -28,71 +29,91 @@ body {
 }
 
 /* Navbar */
-.navbar {
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(250, 246, 240, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  padding: 1rem 0;
+  transition: var(--transition);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+}
+
+nav.scrolled {
+  padding: 0.7rem 0;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.4rem 7%;
-  background-color: rgba(255, 249, 241, 0.8);
-  border-bottom: 1px solid var(--accent);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 9999;
 }
-.navbar .navbar-logo {
+
+.logo {
   font-size: 1.8rem;
   font-weight: 800;
   background: linear-gradient(135deg, var(--accent), var(--secondary-color));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  cursor: pointer;
   transition: var(--transition);
 }
-.navbar .navbar-logo span {
-  color: var(--accent);
+
+.logo:hover {
+  transform: scale(1.05);
 }
 
-.navbar .navbar-menu a {
-  color: var(--accent);
-  display: inline-block;
-  font-size: 1rem;
-  margin: 0 1rem;
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
 }
 
-/* interaktiv warna */
-.navbar .navbar-menu a:hover {
-  color: var(--secondary-color);
+.nav-links a {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+  position: relative;
+  transition: var(--transition);
+  padding: 0.5rem 0;
 }
 
-.navbar .navbar-menu a:after {
+.nav-links a::after {
   content: "";
-  display: block;
-  padding-bottom: 0.2rem;
-  border-bottom: 0.1rem solid var(--accent);
-  transform: scaleX(0);
-  transition: 0.2s linear;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--secondary-color));
+  transition: width 0.3s ease;
 }
 
-.navbar .navbar-menu a:hover:after {
-  transform: scaleX(0.8);
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 100%;
 }
 
-.navbar .feathericons a {
-  color: var(--accent);
-  display: inline-block;
-  margin: 0 0.5rem;
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
 }
 
-.navbar .feathericons a:hover {
-  color: var(--secondary-color);
-}
-
-.navbar .feathericons a:after {
-  content: "";
-  display: block;
-  padding-bottom: 0.2rem;
+.mobile-menu span {
+  width: 25px;
+  height: 3px;
+  background: var(--accent);
+  transition: var(--transition);
+  border-radius: 3px;
 }
 
 /* Hero Section */
